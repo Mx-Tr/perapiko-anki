@@ -22,7 +22,10 @@ def style(package):
 
 def menu_font(package):
     name = family(package)
-    return QFont(name) if name else mw.font()
+    font = QFont(name) if name else mw.font()
+    # Match common.css in the native deck menu, including proportional Cyrillic.
+    font.setFeature(QFont.Tag.fromString("palt"), 1)
+    return font
 
 
 def choose(package):
