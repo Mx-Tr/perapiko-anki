@@ -1,0 +1,139 @@
+html,
+body,
+body.nightMode {
+  background: var(--pp-paper);
+  color-scheme: light;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+#outer {
+  padding: 9px 12px clamp(14px, 2vw, 26px);
+  border: 0;
+}
+#pp-count {
+  margin: 0 0 10px;
+  text-align: center;
+  color: #71646d;
+  font: 450 13px/18px var(--pp-font);
+  font-variant-numeric: tabular-nums;
+}
+#pp-count span {
+  padding: 2px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+#pp-count span[aria-current="true"] {
+  background: #f3e9ee;
+  color: #783c5c;
+  box-shadow: inset 0 0 0 1px #d5bfcc;
+}
+#pp-count span[aria-current="true"] b {
+  color: inherit;
+}
+#pp-count b {
+  font-weight: 650;
+}
+#innertable,
+#middle,
+#middle table,
+#middle td {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+#innertable .stat {
+  display: none;
+}
+#middle {
+  width: 100%;
+  text-align: center;
+}
+#middle table:has(#ansbut) {
+  margin-inline: auto;
+}
+#middle td[align="center"] {
+  padding-top: 0;
+}
+#middle table:has([data-ease]) {
+  display: block;
+  width: min(590px, 100%);
+  margin: auto;
+}
+#middle table:has([data-ease]) tr {
+  display: flex;
+  gap: 10px;
+}
+#middle table:has([data-ease]) :is(tbody, td) {
+  display: block;
+}
+#middle table:has([data-ease]) td {
+  flex: 1;
+  min-width: 0;
+}
+#middle button {
+  box-sizing: border-box;
+  height: 51px;
+  border-radius: 15px;
+  border: 1px solid #dfd4da;
+  box-shadow: 0 3px 0 #d1c4cb;
+  text-shadow: none;
+  cursor: pointer;
+  font: 620 14px/1.35 var(--pp-font);
+  margin: 0;
+  width: 100%;
+}
+#middle button:active {
+  transform: translateY(2px);
+}
+#middle #ansbut {
+  width: min(240px, 80vw);
+  background: #834663;
+  color: white;
+  border-color: #78405c;
+  box-shadow: 0 3px 0 #582e46;
+}
+#ansbut kbd {
+  margin-left: 7px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid #ffffff70;
+  font: 600 12px var(--pp-font);
+}
+#middle [data-ease="1"] {
+  color: #9b3350;
+  background: #f9e6eb;
+}
+#middle [data-ease="2"] {
+  color: #946029;
+  background: #faf0e3;
+}
+#middle [data-ease="3"] {
+  color: #327054;
+  background: #e6f3ec;
+}
+#middle [data-ease="4"] {
+  color: #476795;
+  background: #e9effa;
+}
+#middle .nobold {
+  position: static;
+  transform: none;
+  display: block;
+  color: inherit;
+  font: 500 11px var(--pp-font);
+}
+@media (max-width: 720px) {
+  #middle table:has([data-ease]) tr {
+    gap: 6px;
+  }
+}
+#middle button:focus-visible {
+  outline: 3px solid #8e567c !important;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  #middle button:active {
+    transform: none;
+  }
+}

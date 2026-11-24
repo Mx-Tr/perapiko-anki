@@ -1,0 +1,248 @@
+<article data-font-names="System|Serif|Gothic" class="kaishi pc back">
+  <div class="prompt">
+    <div class="word-block"><div class="term" lang="ja">{{Word}}</div>
+      {{#Word Reading}}<span class="term-reading" lang="ja">{{Word Reading}}</span>{{/Word Reading}}
+      {{#Word Audio}}<span class="sound" data-perapiko-replay aria-label="Play word audio">{{Word Audio}}</span>{{/Word Audio}}
+    </div>
+    {{#Sentence}}<div class="sentence-line">
+      <span class="example" lang="ja">{{#Sentence Furigana}}{{furigana:Sentence Furigana}}{{/Sentence Furigana}}{{^Sentence Furigana}}{{Sentence}}{{/Sentence Furigana}}</span>
+      {{#Sentence Audio}}<span class="sound" data-perapiko-replay aria-label="Play example audio">{{Sentence Audio}}</span>{{/Sentence Audio}}
+    </div>{{/Sentence}}
+  </div>
+  {{#Word Meaning}}<div class="meaning">{{Word Meaning}}</div>{{/Word Meaning}}
+  <div class="answer-details">
+    <div class="example-text">
+      {{#Sentence Meaning}}<div class="translation">{{Sentence Meaning}}</div>{{/Sentence Meaning}}
+      {{#Pitch Accent}}<details class="extra"><summary>Ударение</summary><div lang="ja">{{Pitch Accent}}</div>{{#Pitch Accent Notes}}<div class="note">{{Pitch Accent Notes}}</div>{{/Pitch Accent Notes}}</details>{{/Pitch Accent}}
+      {{#Notes}}<div class="note">{{Notes}}</div>{{/Notes}}
+    </div>
+    {{#Picture}}<details class="picture" open><summary>Иллюстрация</summary>{{Picture}}</details>{{/Picture}}
+  </div>
+</article>
+
+<script>
+// Compute from the visible spelling; ruby readings and whitespace do not affect the size.
+(() => {
+  const cards = document.querySelectorAll(".pc");
+  const card = cards[cards.length - 1];
+  if (!card) return;
+  const spelling = card.querySelector(".term");
+  if (spelling.hasAttribute("data-radical") && !spelling.childElementCount) {
+    const forms = spelling.textContent.trim().match(/^([^\s()（）]+)\s*[(（]([^()（）]+)[)）]$/u);
+    if (forms) {
+      const variants = document.createElement("div");
+      variants.className = "radical-variants";
+      variants.lang = "ja";
+      variants.textContent = forms[2];
+      spelling.textContent = forms[1];
+      spelling.after(variants);
+    }
+  }
+  const term = spelling.cloneNode(true);
+  term
+    .querySelectorAll("rt, rp, style, script")
+    .forEach((node) => node.remove());
+  const length = Array.from(term.textContent.replace(/\s/g, "")).length;
+  card.dataset.length =
+    length === 1
+      ? "one"
+      : length <= 3
+        ? "short"
+        : length <= 6
+          ? "word"
+          : length <= 13
+            ? "phrase"
+            : "sentence";
+})();
+
+</script>
+
+<script>
+(() => {
+  const card = document.querySelector(".kaishi.pc");
+  if (!card) return;
+  const word = card.querySelector(".term");
+  const reading = card.querySelector(".term-reading");
+  if (reading && reading.textContent.trim() !== word.textContent.trim() && !word.querySelector("ruby")) {
+    const ruby = document.createElement("ruby");
+    const rt = document.createElement("rt");
+    rt.append(...reading.childNodes);
+    ruby.append(...word.childNodes, rt);
+    word.append(ruby);
+  }
+  for (const sound of card.querySelectorAll(".sound")) {
+    for (const link of sound.querySelectorAll(".replay-button")) {
+      link.setAttribute("aria-label", sound.getAttribute("aria-label"));
+    }
+  }
+})();
+
+</script>
+
+<script>
+(() => {
+  const cards = document.querySelectorAll(".pc");
+  const card = cards[cards.length - 1];
+  if (!card || card.querySelector(".font-switch")) return;
+
+  const fonts = [
+    { id: "regular", name: "A1 Gothic StdN Regular" },
+    { id: "a1", name: "A1 Gothic StdN Medium" },
+    { id: "line", name: "LINE Seed JP" },
+  ];
+  if (card.dataset.fontNames) {
+    const names = card.dataset.fontNames.split("|");
+    fonts.forEach((font, i) => { font.name = names[i] || font.name; });
+  }
+  const key = "perapikoKaishiFont";
+  let saved = window[key];
+  try {
+    // Anki Desktop can serve the reviewer on a different local port after restart.
+    const cookie = document.cookie.split("; ").find((entry) => entry.startsWith(key + "="));
+    saved = saved || cookie?.slice(key.length + 1) || localStorage.getItem(key);
+  } catch {
+    // In a restricted webview the in-memory choice still survives a card flip.
+  }
+  let index = Math.max(0, fonts.findIndex((font) => font.id === saved));
+  const controls = document.createElement("div");
+  controls.className = "font-switch";
+  const status = document.createElement("span");
+  status.setAttribute("role", "status");
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "tappable";
+  button.textContent = "Aa";
+  controls.append(status, button);
+  card.prepend(controls);
+
+  function apply() {
+    const current = fonts[index];
+    card.dataset.font = current.id;
+    const label = "Шрифт: " + current.name + ". Переключить на " + fonts[(index + 1) % fonts.length].name;
+    button.title = label;
+    button.setAttribute("aria-label", label);
+  }
+  let hideStatus;
+  button.addEventListener("click", (event) => {
+    event.stopPropagation();
+    index = (index + 1) % fonts.length;
+    const current = fonts[index];
+    window[key] = current.id;
+    try {
+      localStorage.setItem(key, current.id);
+    } catch {}
+    try {
+      document.cookie = key + "=" + current.id + "; Max-Age=31536000; Path=/; SameSite=Lax";
+    } catch {}
+    apply();
+    status.textContent = current.name;
+    status.classList.add("visible");
+    clearTimeout(hideStatus);
+    hideStatus = setTimeout(() => status.classList.remove("visible"), 1500);
+  });
+  for (const type of ["keydown", "keyup"]) {
+    button.addEventListener(type, (event) => {
+      if (event.key === " " || event.key === "Enter") event.stopPropagation();
+    });
+  }
+  apply();
+})();
+
+</script>
+
+<script>
+(() => {
+  const cards = document.querySelectorAll(".pc");
+  const card = cards[cards.length - 1];
+  window.perapikoEndCenter?.();
+  delete window.perapikoEndCenter;
+  // The desktop add-on positions its own prompt and moves the term into it.
+  if (!card || (!card.classList.contains("kaishi") && document.querySelector(".pp-study-nav"))) return;
+  const content = document.createElement("div");
+  content.className = "study-content";
+  const front = card.classList.contains("front");
+  const key = "perapikoStudyAnchor";
+  const baseTerm = card.querySelector(".term").cloneNode(true);
+  baseTerm.querySelectorAll("rt, rp").forEach(node => node.remove());
+  const spelling = baseTerm.textContent;
+  const mobile = matchMedia("(max-width: 600px)");
+  let reference, lastRecord;
+  let previous = window[key];
+  if (!front && !previous) {
+    try { previous = JSON.parse(sessionStorage.getItem(key)); } catch {}
+  }
+
+  function position() {
+    if (!card.isConnected) return;
+    card.classList.toggle("study-centered", mobile.matches);
+    if (!mobile.matches) {
+      card.classList.remove("study-anchored");
+      reference?.remove();
+      reference = null;
+      return;
+    }
+    if (!content.isConnected) {
+      const blocks = Array.from(card.children).filter(el =>
+        !el.matches(".font-switch, template, script, style, link"));
+      card.append(content);
+      content.append(...blocks);
+    }
+    if (front && !reference) {
+      const template = card.querySelector("template.study-layout");
+      reference = template.content.firstElementChild.cloneNode(true);
+      reference.querySelectorAll("script, style, iframe, object, embed, video, audio, source, link").forEach(el => el.remove());
+      for (const el of reference.querySelectorAll("*")) {
+        el.removeAttribute("id");
+        el.removeAttribute("autofocus");
+        for (const attr of Array.from(el.attributes)) {
+          if (attr.name.startsWith("on")) el.removeAttribute(attr.name);
+        }
+      }
+      // Reserve the usual thumbnail height on a cold media cache.
+      for (const img of reference.querySelectorAll(".extra img")) {
+        if (img.naturalWidth) continue;
+        img.style.minHeight = "152px";
+        const release = () => img.style.removeProperty("min-height");
+        img.addEventListener("load", release, { once: true });
+        img.addEventListener("error", release, { once: true });
+      }
+      // Apply the same split between the main radical and its alternate forms.
+      const header = reference.querySelector(".term");
+      header.replaceWith(content.querySelector(".term").cloneNode(true));
+      const variants = content.querySelector(".radical-variants");
+      if (variants) reference.querySelector(".term").after(variants.cloneNode(true));
+      card.append(reference);
+      observer.observe(reference);
+    }
+    const top = card.getBoundingClientRect().top + scrollY;
+    const height = Math.max(0, Math.round(innerHeight - top));
+    card.style.setProperty("--study-height", height + "px");
+    if (front) {
+      const gap = Math.max(0, content.getBoundingClientRect().top -
+        card.getBoundingClientRect().top - parseFloat(getComputedStyle(card).paddingTop));
+      const record = { spelling, width: innerWidth, height, gap };
+      window[key] = record;
+      const serialized = JSON.stringify(record);
+      if (lastRecord !== serialized) {
+        try { sessionStorage.setItem(key, serialized); } catch {}
+        lastRecord = serialized;
+      }
+    } else {
+      // Grading controls can shorten the WebView between question and answer.
+      const reuse = previous?.spelling === spelling && previous.width === innerWidth &&
+        Math.abs(previous.height - height) < 140;
+      card.classList.toggle("study-anchored", reuse);
+      if (reuse) card.style.setProperty("--study-anchor", previous.gap + "px");
+    }
+  }
+  const observer = new ResizeObserver(position);
+  observer.observe(content);
+  window.addEventListener("resize", position);
+  window.perapikoEndCenter = () => {
+    observer.disconnect();
+    window.removeEventListener("resize", position);
+  };
+  position();
+})();
+
+</script>

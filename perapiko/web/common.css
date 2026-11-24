@@ -1,0 +1,106 @@
+:root {
+  --pp-paper: #faf7f3;
+  --pp-ink: #382c38;
+  --pp-font: system-ui, sans-serif;
+}
+#pp-home .tile-heading,
+#pp-home .pp-deck-actions > strong,
+.pp-study-nav .review-deck-name {
+  font-feature-settings: "palt" 1;
+}
+:is(#pp-count, #pp-home) [data-queue="new"] { color: #275c98; }
+:is(#pp-count, #pp-home) [data-queue="learning"] { color: #a14631; }
+:is(#pp-count, #pp-home) [data-queue="due"] { color: #397049; }
+
+#pp-home,
+.pp-study-nav,
+.pp-summary {
+  font: 14px/1.5 var(--pp-font);
+  letter-spacing: -0.015em;
+  color: var(--pp-ink);
+  text-align: left;
+  color-scheme: light;
+}
+:is(#pp-home, .pp-study-nav, .pp-summary) *,
+:is(#pp-home, .pp-study-nav, .pp-summary) *::before {
+  box-sizing: border-box;
+}
+:is(#pp-home, .pp-study-nav, .pp-summary) :is(button, summary) {
+  appearance: none;
+  font-family: var(--pp-font);
+  cursor: pointer;
+  box-shadow: none;
+  text-shadow: none;
+}
+:is(#pp-home, .pp-study-nav, .pp-summary) button:focus-visible,
+.pp-menu summary:focus-visible {
+  outline: 3px solid #8e567c !important;
+  outline-offset: 3px;
+}
+.pp-menu {
+  position: relative;
+  flex: none;
+  z-index: 3;
+  margin-left: auto;
+}
+.pp-menu summary {
+  list-style: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 36px;
+  background: transparent;
+  color: #684f60;
+  border-radius: 11px;
+  font: 600 21px/1 var(--pp-font);
+}
+.pp-menu summary::-webkit-details-marker {
+  display: none;
+}
+.pp-menu[open] summary,
+.pp-menu summary:hover {
+  background: #f1e7ef;
+}
+.pp-popup {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 5px);
+  display: grid;
+  width: max-content;
+  min-width: min(180px, calc(100vw - 16px));
+  padding: 5px;
+  background: #fffaf7;
+  border-radius: 13px;
+  border: 1px solid #dfd4da;
+  box-shadow: 0 4px 18px #44233d18;
+}
+.pp-popup button {
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #463242;
+  padding: 9px 12px;
+  font-size: 14px;
+  white-space: nowrap;
+  text-align: left;
+}
+.pp-popup button:hover,
+.pp-popup button:focus-visible {
+  background: #f1e7ef;
+}
+
+.pp-menu .pp-popup {
+  max-height: calc(100dvh - 80px);
+  max-width: calc(100vw - 16px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.pp-menu .pp-popup button {
+  margin: 0;
+  line-height: 1.35;
+  white-space: normal;
+  background-image: none;
+}
+.pp-menu .pp-popup button:focus-visible {
+  outline-offset: -3px !important;
+}

@@ -1,0 +1,566 @@
+.card,
+.card.nightMode,
+.nightMode .card,
+.night_mode .card {
+  background-color: var(--paper);
+  color: var(--ink);
+  margin: 0;
+}
+body.card {
+  padding: 0;
+}
+.pc,
+.pc * {
+  box-sizing: border-box;
+}
+.pc {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(22px, 5vw, 44px);
+  text-align: left;
+  color: var(--ink);
+  background: var(--paper);
+  font:
+    400 17px/1.55 -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    sans-serif;
+  overflow-wrap: anywhere;
+  -webkit-text-size-adjust: 100%;
+}
+.pc [lang="ja"] {
+  font-family: var(--jp);
+  line-break: strict;
+}
+.pc .face {
+  margin: 0;
+}
+.pc .term {
+  font-size: 58px;
+  font-size: clamp(46px, 13vw, 82px);
+  line-height: 1.24;
+  font-weight: var(--weight, 500);
+  letter-spacing: 0;
+  white-space: normal;
+}
+.pc[data-length="one"] .term {
+  font-size: clamp(114px, 34vw, 164px);
+}
+.pc[data-length="short"] .term {
+  font-size: clamp(70px, 18vw, 106px);
+}
+.pc[data-length="phrase"] .term {
+  font-size: clamp(42px, 10vw, 66px);
+}
+.pc[data-length="sentence"] .term {
+  font-size: clamp(31px, 7.6vw, 43px);
+  line-height: 1.6;
+}
+.pc .reading {
+  margin-top: 8px;
+  color: var(--accent);
+  font-size: 18px;
+  letter-spacing: 0.04em;
+}
+.pc .meaning {
+  color: var(--ink);
+  font-size: clamp(22px, 5vw, 30px);
+  line-height: 1.35;
+  margin-top: 12px;
+}
+.pc .meaning :is(ol, ul) {
+  padding-left: 1.25em;
+}
+.pc .meaning li {
+  margin-block: 4px;
+}
+.pc .context,
+.pc .notes {
+  margin-top: 22px;
+}
+.pc .caption {
+  font:
+    600 12px/1.5 -apple-system,
+    Roboto,
+    sans-serif;
+  letter-spacing: 0.035em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.pc .example {
+  font-size: clamp(21px, 4.7vw, 26px);
+  line-height: 1.8;
+}
+.pc .example b,
+.pc .example mark {
+  color: var(--accent);
+  background: transparent;
+}
+.pc rt {
+  font-size: 0.5em;
+}
+.pc .translation,
+.pc .note {
+  font-size: 16px;
+  line-height: 1.52;
+  color: var(--muted);
+  margin-top: 5px;
+}
+.pc .readline {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.pc .readline .reading {
+  margin: 0;
+}
+.pc .example-line {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+.pc .example-line .example {
+  min-width: 0;
+  flex: 1;
+}
+.pc .sound {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+.pc .sound :is(.replay-button, .replaybutton, .soundLink, .preview-audio) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+}
+.pc .sound svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+}
+.pc .sound svg circle {
+  fill: var(--wash);
+  stroke: var(--line);
+}
+.pc .sound svg path,
+.pc .sound svg polygon {
+  fill: var(--accent);
+}
+.pc :is(a, button, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.pc a {
+  color: var(--accent);
+}
+.pc .extra {
+  margin: 16px 0 0;
+  text-align: left;
+}
+.pc .extra summary {
+  width: fit-content;
+  min-height: 44px;
+  padding-block: 10px;
+  color: var(--muted);
+  font:
+    500 14px/1.6 -apple-system,
+    Roboto,
+    sans-serif;
+  cursor: pointer;
+}
+.pc .extra img {
+  display: block;
+  max-width: min(100%, 220px);
+  max-height: 152px;
+  height: auto;
+  width: auto;
+  border-radius: 8px;
+}
+.pc .extra .note {
+  margin-bottom: 8px;
+}
+.pc img {
+  max-width: 100%;
+  height: auto;
+}
+.pc audio {
+  max-width: 100%;
+}
+@media (max-height: 490px) {
+  .pc {
+    padding-block: 14px;
+  }
+}
+
+.pc .sentence-hint summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  list-style: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.pc .sentence-hint summary::-webkit-details-marker {
+  display: none;
+}
+.pc .sentence-hint .example {
+  min-width: 0;
+  pointer-events: none;
+  transition: filter 160ms ease-out, opacity 160ms ease-out;
+}
+.pc .sentence-hint:not([open]) .example {
+  filter: blur(6px);
+  opacity: 0.65;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.pc .hint-description {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc .sentence-hint .example {
+    transition: none;
+  }
+}
+
+.pc .radical-variants {
+  margin-top: 4px;
+  text-align: center;
+  font-size: clamp(30px, 8vw, 46px);
+  line-height: 1.45;
+  color: var(--muted);
+}
+.pc .radical-mark {
+  color: var(--accent);
+  font: 0.68em/1 sans-serif;
+  vertical-align: 0.12em;
+}
+
+:root {
+  --paper: #202b30;
+  --ink: #f4ead7;
+  --accent: #edc483;
+  --muted: #ced4cf;
+  --line: #526063;
+  --wash: #344146;
+  color-scheme: dark;
+  background-color: var(--paper);
+  scrollbar-gutter: stable;
+  --jp:
+    "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", "Noto Serif JP",
+    serif;
+}
+.pc .term {
+  text-align: center;
+}
+.pc .readline {
+  justify-content: center;
+  margin-top: 7px;
+}
+.pc .meaning {
+  text-align: center;
+  font-family: Georgia, serif;
+}
+.pc .meaning :is(ol, ul) {
+  text-align: left;
+}
+.pc .context {
+  border-top: 1px solid var(--line);
+  padding-top: 17px;
+}
+.pc .notes {
+  background: var(--wash);
+  padding: 12px 16px 15px;
+  border-radius: 8px;
+}
+/* The grading controls can change the viewport height when an answer appears. */
+.pc.front,
+.pc.back {
+  padding-block: clamp(22px, 5vw, 44px);
+}
+.pc .face {
+  padding-top: clamp(18px, 5vw, 40px);
+}
+.pc[data-length="sentence"] .term {
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .pc.front,
+  .pc.back {
+    padding: 14px clamp(14px, 4vw, 22px) 10px;
+  }
+  .pc .face {
+    /* Keep a clear corner for Aa above words that can span the full width. */
+    padding-top: 30px;
+  }
+  .pc:is([data-length="one"], [data-length="short"]) .face {
+    padding-top: 4px;
+  }
+  .pc .term {
+    line-height: 1.18;
+  }
+  .pc[data-length="one"] .term {
+    font-size: clamp(124px, 37.5vw, 164px);
+  }
+  .pc[data-length="short"] .term {
+    font-size: clamp(74px, 21.2vw, 110px);
+  }
+  .pc[data-length="word"] .term {
+    font-size: clamp(46px, 14.5vw, 82px);
+  }
+  .pc[data-length="sentence"] .term {
+    line-height: 1.5;
+  }
+  .pc .readline {
+    margin-top: 2px;
+  }
+  .pc .meaning {
+    margin-top: 3px;
+  }
+  .pc .context,
+  .pc .notes {
+    margin-top: 14px;
+  }
+  .pc .context {
+    padding-top: 10px;
+  }
+  .pc .example {
+    font-size: clamp(23px, 6.2vw, 27px);
+    line-height: 1.7;
+  }
+  .pc .kaishi-sentence {
+    font-size: clamp(25px, 7vw, 30px);
+    text-wrap: balance;
+  }
+  .pc .kaishi-sentence b {
+    display: inline-block;
+    max-inline-size: 100%;
+  }
+  .pc .radical-variants {
+    font-size: clamp(32px, 9vw, 48px);
+  }
+  .pc .font-switch [role="status"] {
+    align-self: flex-start;
+    background: var(--paper);
+  }
+  .pc .study-extras {
+    margin-top: 5px;
+  }
+  .pc .study-extras:not(:has(details)) {
+    display: none;
+  }
+  .pc .study-extras .extra {
+    margin: 0;
+  }
+
+  /* Put both disclosure controls in reach, with full-width content below. */
+  @supports selector(details::details-content) {
+    .pc .study-extras {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      column-gap: 16px;
+    }
+    .pc .study-extras details,
+    .pc .study-extras details::details-content {
+      display: contents;
+    }
+    .pc .study-extras summary {
+      grid-row: 1;
+      grid-column: 1;
+      max-width: 100%;
+    }
+    .pc .study-extras details + details summary {
+      grid-column: 2;
+    }
+    .pc .study-extras .extra-content {
+      grid-column: 1 / -1;
+      min-width: 0;
+    }
+    .pc .study-extras details:not([open]) .extra-content {
+      display: none;
+    }
+  }
+}
+
+/* Both faces share the space occupied by the complete study card. */
+@media (max-width: 600px) {
+  .pc.study-centered {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    min-height: var(--study-height, 100svh);
+  }
+  .pc.study-centered > :is(.study-content, .study-reference) {
+    grid-area: 1 / 1;
+    align-self: start;
+    min-width: 0;
+    display: flow-root;
+  }
+  .pc.study-centered > .study-reference {
+    visibility: hidden;
+    pointer-events: none;
+    overflow: clip;
+    max-height: max(0px, calc(var(--study-height, 100svh) - 24px));
+  }
+  .pc .study-reference .sound {
+    width: 44px;
+    height: 44px;
+  }
+  .pc.study-anchored {
+    align-content: start;
+  }
+  .pc.study-anchored > .study-content {
+    margin-top: var(--study-anchor);
+  }
+}
+
+.pc .font-switch {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: clamp(8px, 3vw, 24px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1;
+}
+.pc .font-switch button {
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  border-radius: 10px;
+  padding: 0;
+  background: transparent;
+  color: var(--muted);
+  font: 500 16px/1 -apple-system, sans-serif;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.pc .font-switch button:active { background: var(--wash); }
+.pc .font-switch [role="status"] {
+  color: var(--muted);
+  font: 13px/1.3 -apple-system, sans-serif;
+  pointer-events: none;
+  opacity: 0;
+}
+.pc .font-switch [role="status"].visible { opacity: 1; }
+
+:root, .card, .nightMode .card, .card.nightMode {
+  --paper: #faf7f3;
+  --ink: #382c38;
+  --muted: #675665;
+  --accent: #834663;
+  --line: #ddced6;
+  --wash: #f3e9ee;
+  --kaishi-font: system-ui, sans-serif;
+  --kaishi-second-font: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  --kaishi-third-font: "Yu Gothic", "Hiragino Sans", sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  color-scheme: light;
+  margin: 0;
+  padding: 0;
+}
+.kaishi.pc {
+  --jp: var(--kaishi-font);
+  position: relative;
+  max-width: clamp(780px, 80vw, 1020px);
+  margin: 0 auto;
+  padding: 0 clamp(12px, 2vw, 24px) 8px;
+  font: 400 17px/1.55 var(--kaishi-font);
+  text-align: center;
+}
+.kaishi.pc[data-font="a1"] { --jp: var(--kaishi-second-font); }
+.kaishi.pc[data-font="line"] { --jp: var(--kaishi-third-font); }
+.kaishi .prompt {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(max-content, calc(55vh - var(--pp-review-nav-height, 0px))) auto;
+  align-items: end;
+}
+.kaishi .word-block, .kaishi .sentence-line {
+  position: relative;
+  width: fit-content;
+  max-width: calc(100% - 84px);
+  margin-inline: auto;
+}
+.kaishi .sentence-line { margin-top: 2px; }
+.kaishi.pc .prompt .term {
+  font: 500 clamp(54px, min(11.5vw, 20vh), 152px)/1.45 var(--jp);
+  letter-spacing: 0.025em;
+}
+.kaishi .term rt { font: 400 clamp(13px, 0.18em, 24px)/1 var(--jp); color: #765e70; }
+.kaishi .term-reading { display: none; }
+.kaishi.pc .prompt .example {
+  display: block;
+  font: 400 clamp(23px, min(3.2vw, 5.7vh), 44px)/1.95 var(--jp);
+}
+.kaishi .example ruby:has(> rt:only-of-type) { display: inline-block; position: relative; line-height: 1; }
+.kaishi .example ruby > rt:only-of-type {
+  position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+  font-size: 0.36em; line-height: 1; white-space: nowrap;
+}
+.kaishi .sentence-hint summary { display: block; min-height: 0; }
+.kaishi .sentence-hint:not([open]) .example { filter: blur(7px); }
+.kaishi .sound {
+  position: absolute; inset-inline-start: calc(100% + 5px); top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column;
+}
+.kaishi .sound :is(.replay-button,.replaybutton,.soundLink) {
+  width: 34px; height: 34px; border-radius: 50%; background: var(--wash); border: 1px solid #d5bfcc;
+}
+.kaishi.pc .meaning { margin: 4px 0 8px; font: 400 clamp(22px, 2.15vw, 29px)/1.35 var(--kaishi-font); }
+.kaishi .answer-details {
+  max-width: 720px; margin: 8px auto 0; border-top: 1px solid var(--line); padding-top: 8px;
+  display: flex; align-items: flex-start; gap: 24px; text-align: left;
+}
+.kaishi .answer-details:not(:has(.translation,.extra,.picture,.note)) { display: none; }
+.kaishi .example-text { flex: 1; min-width: 0; }
+.kaishi .example-text:not(:has(*)) { display: none; }
+.kaishi .translation { font: 400 clamp(19px, 1.75vw, 24px)/1.45 var(--kaishi-font); color: var(--muted); }
+.kaishi .extra { margin: 4px 0 0; }
+.kaishi .extra summary { min-height: 32px; padding-block: 4px; }
+.kaishi .picture { position: relative; flex: 0 1 215px; margin-inline: auto; }
+.kaishi .picture[open] summary { position: absolute; inset: 0; font-size: 0; cursor: pointer; list-style: none; }
+.kaishi .picture[open] summary::-webkit-details-marker { display: none; }
+.kaishi .picture img { display: block; max-width: 100%; height: auto; max-height: 152px; margin: auto; border-radius: 8px; }
+.kaishi .font-switch button { margin: 0; }
+.kaishi :is(summary,.translation,.meaning,.note) { font-feature-settings: "palt" 1; }
+@media (max-width: 600px) {
+  .kaishi.pc { padding: 14px clamp(14px, 4vw, 22px) 10px; }
+  .kaishi .prompt { grid-template-rows: auto auto; }
+  .kaishi .word-block,.kaishi .sentence-line { max-width: calc(100% - 64px); }
+  .kaishi.pc .prompt .term { font-size: clamp(46px, 14.5vw, 82px); line-height: 1.18; }
+  .kaishi.pc[data-length="one"] .term { font-size: clamp(124px, 37.5vw, 164px); }
+  .kaishi.pc[data-length="short"] .term { font-size: clamp(74px, 21.2vw, 110px); }
+  .kaishi.pc[data-length="sentence"] .term { font-size: clamp(31px, 7.6vw, 43px); }
+  .kaishi .sentence-line { margin-top: 14px; }
+  .kaishi.pc .prompt .example { font-size: clamp(25px, 7vw, 30px); line-height: 1.7; }
+  .kaishi .answer-details { display: block; padding-top: 10px; text-align: center; }
+  .kaishi .picture { margin: 8px auto; }
+}
+.kaishi .sound .replay-button[aria-pressed="true"] { color: white; background: var(--accent); }
+@media (max-width: 600px) {
+  .kaishi .term ruby { display: inline-block; line-height: 1; position: relative; }
+  .kaishi .term rt {
+    position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%);
+    white-space: nowrap;
+  }
+}

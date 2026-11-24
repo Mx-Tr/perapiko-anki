@@ -1,0 +1,90 @@
+/* Note styling and inline styles take precedence over these reviewer defaults. */
+@layer perapiko-defaults {
+  :where(body.card) { color: var(--pp-ink); background: var(--pp-paper); margin: 0; padding: 0; min-height: 100vh; }
+  :where(#qa) { box-sizing: border-box; margin: auto; }
+  :where(#qa > p, #qa > ul, #qa > ol) { max-inline-size: 75ch; margin-inline: auto; padding-inline: clamp(8px, 2vw, 24px); }
+}
+body:has(.pp-study-nav) { --pp-review-nav-height: clamp(46px, 8vh, 64px); }
+.pp-study-nav {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--pp-review-nav-height);
+  width: 100%;
+  margin: 0;
+  padding: 4px clamp(12px, 2vw, 28px);
+  background: var(--pp-paper);
+}
+.pp-study-nav .pp-return {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 30px;
+  padding: 0 0 2px;
+  border: 1px solid #d9cfd4;
+  border-radius: 7px;
+  background: #fffaf6;
+  border-bottom: 2px solid #cbbdc5;
+  color: #675762;
+  font: 400 23px/1 var(--pp-font);
+}
+.pp-study-nav .pp-return:active {
+  transform: translateY(1px);
+  border-bottom-width: 1px;
+}
+.review-deck-name {
+  text-align: center;
+  color: #70656c;
+  font: 450 14px/1.4 var(--pp-font);
+  overflow-wrap: anywhere;
+}
+.pp-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 62vh;
+  gap: clamp(16px, 4vw, 64px);
+}
+.pp-summary img {
+  width: min(36vw, 390px);
+}
+.pp-summary h1 {
+  margin: 0;
+  font-size: 30px;
+  letter-spacing: -0.045em;
+}
+.pp-summary p {
+  color: #73646e;
+}
+.pp-summary button {
+  border-radius: 14px;
+  border: 1px solid #dfd4da;
+  background: #684465;
+  color: #fffaf6;
+  font-size: 14px;
+  padding: 10px 16px;
+}
+@media (max-width: 720px) {
+  .pp-study-nav {
+    padding-inline: 13px;
+    min-height: var(--pp-review-nav-height);
+    gap: 6px;
+  }
+  .pp-summary {
+    flex-direction: column;
+    text-align: center;
+  }
+  .pp-summary img {
+    width: min(72vw, 330px);
+  }
+}
+
+.pp-study-nav .pp-return { margin: 0; }
+body:has(.pp-summary) { background: var(--pp-paper); }
+.pp-summary { padding-inline: 16px; }
+.pp-study-nav .pp-return:hover { color: #463242; border-color: #bcaeb7; }
